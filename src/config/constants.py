@@ -40,11 +40,11 @@ DEFAULT_RULES: List[Dict] = [
     },
     {
         "conditions": {
-            "accident_rate": ">8", 
-            "socioeconomic_level": "<3"
+            "crime_index": "<4", 
+            "weather": {"Clear"}
         }, 
-        "multiplier": 1.10,
-        "description": "High accidents + low socioeconomic amplification"
+        "multiplier": 0.9,
+        "description": "Low crime + clear weather bonus (risk reduction)"
     }
     # Additional rules can be added here following the same pattern
 ]
@@ -72,11 +72,11 @@ CSV_OPTIONAL_COLUMNS: List[str] = ["city"]
 CSV_OUTPUT_COLUMNS: List[str] = [
     # Input columns
     "city", "crime_index", "accident_rate", "socioeconomic_level", "weather",
-    # Calculated columns
-    "risk_score", "crime_component", "accident_component", 
-    "socioeconomic_component", "weather_component",
+    # Calculated component columns
+    "crime_index_component", "accident_rate_component", 
+    "socioeconomic_level_component", "weather_component",
     # Status columns
-    "processing_status", "error_message"
+    "processing_status", "error_message", "risk_score"
 ]
 
 # CSV Processing Performance Settings
