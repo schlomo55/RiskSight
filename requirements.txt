@@ -1,0 +1,48 @@
+# Core FastAPI and web server dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.19
+
+# Data processing and validation
+pandas==2.1.3
+pydantic==2.5.0
+numpy==1.26.4
+
+# Async and concurrency support
+anyio==3.7.1
+
+# HTTP client for testing (optional but useful)
+httpx==0.25.2
+
+# Development and testing dependencies (optional)
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# Type checking support
+typing-extensions==4.8.0
+
+# CORS middleware (already included in FastAPI but explicit for clarity)
+# fastapi includes starlette which includes CORS support
+
+# Logging enhancements
+python-json-logger==2.0.7
+
+# File handling and I/O
+aiofiles==23.2.0
+
+# Optional: For enhanced error handling and debugging
+rich==13.7.0
+
+# Optional: For additional validation features
+email-validator==2.1.0
+
+# Security dependencies (if needed for future enhancements)
+# python-jose[cryptography]==3.3.0
+# passlib[bcrypt]==1.7.4
+
+# Production server alternatives (optional)
+# gunicorn==21.2.0
+
+# Note: Python 3.12 compatibility
+# All packages listed are compatible with Python 3.12
+# Some packages may have newer versions available - update as needed

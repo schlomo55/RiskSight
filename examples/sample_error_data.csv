@@ -1,0 +1,26 @@
+city,crime_index,accident_rate,socioeconomic_level,weather
+Valid City 1,5.0,4.0,6,Clear
+Out of Range Crime,15.0,5.0,6,Clear
+Invalid Weather,5.0,4.0,6,Foggy
+Missing Crime,,4.0,6,Clear
+Out of Range Accident,5.0,12.0,6,Clear
+Invalid Socioeconomic,5.0,4.0,0,Clear
+Valid City 2,6.0,5.0,7,Rainy
+String Crime,high,4.0,6,Clear
+Negative Values,-2.0,4.0,6,Clear
+Out of Range Socio High,5.0,4.0,15,Clear
+Empty Weather,5.0,4.0,6,
+Mixed Valid/Invalid 1,7.2,6.8,4,Stormy
+String Accident,5.0,medium,6,Clear
+Missing Socioeconomic,5.0,4.0,,Clear
+Invalid Weather 2,5.0,4.0,6,Sunny
+Valid City 3,8.1,7.3,3,Snowy
+Decimal Socio Error,5.0,4.0,6.5,Clear
+Multiple Errors,20.0,15.0,0,Unknown
+Valid City 4,3.2,3.8,8,Extreme
+Case Sensitive Weather,5.0,4.0,6,clear
+Boundary Test High,10.0,10.0,10,Extreme
+Boundary Test Low,0.0,0.0,1,Clear
+Special Characters,5.0,4.0,6,Storm@
+Missing All Data,,,
+Float String Mix,5.5,abc,6,Clear

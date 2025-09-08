@@ -1,0 +1,51 @@
+city,crime_index,accident_rate,socioeconomic_level,weather
+New York City,7.8,6.5,5,Rainy
+Los Angeles,6.2,8.1,6,Clear
+Chicago,8.5,7.3,4,Stormy
+Houston,5.4,6.8,7,Clear
+Phoenix,4.1,5.2,6,Extreme
+Philadelphia,7.2,6.9,4,Rainy
+San Antonio,3.8,4.5,5,Clear
+San Diego,3.2,5.7,8,Clear
+Dallas,6.8,7.4,6,Clear
+San Jose,2.9,4.8,9,Clear
+Austin,4.5,5.6,7,Rainy
+Jacksonville,5.7,6.1,5,Stormy
+San Francisco,5.8,6.3,8,Clear
+Columbus,4.9,5.4,6,Snowy
+Fort Worth,5.2,6.7,6,Clear
+Charlotte,4.3,5.8,7,Rainy
+Detroit,9.1,8.2,2,Snowy
+El Paso,3.4,4.2,4,Clear
+Memphis,8.7,7.6,3,Stormy
+Denver,3.6,5.9,8,Snowy
+Washington DC,6.4,6.2,7,Rainy
+Boston,5.9,5.8,8,Snowy
+Nashville,5.1,6.4,7,Clear
+Baltimore,8.2,7.1,4,Rainy
+Oklahoma City,4.8,6.6,5,Stormy
+Portland,4.2,5.3,7,Rainy
+Las Vegas,6.3,7.8,6,Extreme
+Louisville,6.1,6.3,5,Clear
+Milwaukee,7.4,6.7,4,Snowy
+Albuquerque,5.6,5.9,5,Clear
+Tucson,4.7,5.1,5,Extreme
+Fresno,6.9,7.2,4,Clear
+Sacramento,5.3,6.1,6,Clear
+Mesa,3.9,4.6,6,Extreme
+Kansas City,6.5,6.8,5,Stormy
+Atlanta,7.6,7.5,5,Rainy
+Long Beach,5.8,6.4,6,Clear
+Colorado Springs,3.1,4.9,7,Snowy
+Raleigh,3.7,4.8,8,Clear
+Miami,7.3,6.9,6,Stormy
+Virginia Beach,2.8,4.3,7,Clear
+Omaha,4.4,5.7,6,Snowy
+Oakland,8.9,7.8,4,Clear
+Minneapolis,5.2,6.1,7,Snowy
+Tulsa,5.9,6.5,5,Clear
+Arlington,4.6,5.5,6,Clear
+Tampa,6.7,7.1,5,Stormy
+New Orleans,9.3,8.4,3,Stormy
+Wichita,4.1,5.8,5,Clear
+Cleveland,8.1,7.3,3,Snowy
