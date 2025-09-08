@@ -14,10 +14,10 @@ from fastapi import HTTPException
 
 # Import the FastAPI app
 from main import app
-from api.routes import risk_processor, csv_processor
-from core.validators import ValidationError
-from services.csv_processor import CSVProcessingError
-from config.constants import WEATHER_CATEGORIES
+from src.api.routes import risk_processor, csv_processor
+from src.core.validators import ValidationError
+from src.services.csv_processor import CSVProcessingError
+from src.config.constants import WEATHER_CATEGORIES
 
 
 class TestAPIClientSetup:

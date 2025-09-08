@@ -12,10 +12,10 @@ import time
 from unittest.mock import Mock, patch
 from concurrent.futures import ThreadPoolExecutor
 
-from services.csv_processor import CSVProcessor, CSVProcessingError
-from core.risk_processor import RiskProcessor
-from core.validators import ValidationError
-from services.logger_service import LoggerService
+from src.services.csv_processor import CSVProcessor, CSVProcessingError
+from src.core.risk_processor import RiskProcessor
+from src.core.validators import ValidationError
+from src.services.logger_service import LoggerService
 
 
 class TestCSVProcessorInitialization:
