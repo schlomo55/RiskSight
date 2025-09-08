@@ -250,15 +250,15 @@ class CSVValidator:
             errors.append("CSV file is empty")
             return errors
         
+        # Check for duplicate column names first (higher priority error)
+        duplicate_columns = df.columns[df.columns.duplicated()].tolist()
+        if duplicate_columns:
+            errors.append(f"Duplicate column names: {', '.join(duplicate_columns)}")
+        
         # Check for required columns
         missing_columns = set(self.required_columns) - set(df.columns)
         if missing_columns:
             errors.append(f"Missing required columns: {', '.join(missing_columns)}")
-        
-        # Check for duplicate column names
-        duplicate_columns = df.columns[df.columns.duplicated()].tolist()
-        if duplicate_columns:
-            errors.append(f"Duplicate column names found: {', '.join(duplicate_columns)}")
         
         # Check for completely empty rows (all NaN)
         empty_rows = df.isnull().all(axis=1).sum()

@@ -53,11 +53,19 @@ class RiskDataInput(BaseModel):
     )
     
     @validator('weather')
-    def validate_weather_category(cls, v):
-        """Validate weather category against allowed values."""
-        if v not in WEATHER_CATEGORIES:
+    def validate_weather_category(cls, v:str):
+        """Validate weather category against allowed values (case-insensitive)."""
+        # Create case-insensitive mapping for weather categories
+        weather_mapping = {key.lower(): key for key in WEATHER_CATEGORIES.keys()}
+        
+        # Convert input to lowercase for comparison
+        v_lower = v.lower()
+        
+        if v_lower not in weather_mapping:
             raise ValueError(f"Unknown weather: {v}")
-        return v
+            
+        # Return the properly formatted weather value
+        return weather_mapping[v_lower]
     
     @validator('city')
     def validate_city_name(cls, v):
