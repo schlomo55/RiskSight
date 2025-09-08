@@ -132,11 +132,11 @@ class CSVProcessor:
             CSVProcessingError: If parsing fails
         """
         try:
-            # Parse CSV with pandas
-            df = pd.read_csv(StringIO(content))
+            # Parse CSV with pandas, skip bad lines to handle malformed rows
+            df = pd.read_csv(StringIO(content), on_bad_lines='skip')
             
             if df.empty:
-                raise CSVProcessingError("CSV file is empty")
+                raise CSVProcessingError("CSV file contains no data")
             
             self.logger.log_info(
                 f"Parsed CSV file: {filename}",
@@ -151,7 +151,16 @@ class CSVProcessor:
         except pd.errors.EmptyDataError:
             raise CSVProcessingError("CSV file contains no data")
         except pd.errors.ParserError as e:
-            raise CSVProcessingError(f"CSV parsing error: {str(e)}")
+            # Try to handle parsing errors more gracefully
+            self.logger.log_error(f"CSV parsing warning for {filename}: {str(e)}")
+            try:
+                # Try with skip_blank_lines and error handling
+                df = pd.read_csv(StringIO(content), on_bad_lines='skip', skip_blank_lines=True)
+                if df.empty:
+                    raise CSVProcessingError("CSV file contains no valid data")
+                return df
+            except Exception:
+                raise CSVProcessingError(f"CSV parsing error: {str(e)}")
         except Exception as e:
             raise CSVProcessingError(f"Failed to parse CSV: {str(e)}")
     
@@ -353,10 +362,17 @@ class CSVProcessor:
         Returns:
             List of validation error messages (empty if valid)
         """
+        # Check for empty content first
+        if not file_content or not file_content.strip():
+            return ["CSV file is empty"]
+        
         try:
             df = pd.read_csv(StringIO(file_content))
             return self.csv_validator.validate_csv_structure(df)
         except Exception as e:
+            error_msg = str(e).lower()
+            if "no columns" in error_msg or "empty" in error_msg:
+                return ["CSV file is empty"]
             return [f"Failed to parse CSV for validation: {str(e)}"]
     
     def get_processing_info(self) -> Dict[str, Any]:
