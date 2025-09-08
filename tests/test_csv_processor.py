@@ -387,7 +387,7 @@ City4,4.0,3.0,8,Stormy"""
                 assert pd.notna(row["risk_score"])
                 assert row["risk_score"] != ""
     
-    @patch('concurrent.futures.ThreadPoolExecutor')
+    @patch('src.services.csv_processor.ThreadPoolExecutor')
     def test_thread_pool_executor_usage(self, mock_executor_class):
         """Test that ThreadPoolExecutor is used correctly."""
         mock_executor = Mock()

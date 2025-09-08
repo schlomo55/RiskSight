@@ -115,7 +115,7 @@ class TestHealthEndpoint:
         for component in expected_components:
             assert component in components or len(components) > 0  # Flexible for different component names
     
-    @patch('services.logger_service.LoggerService.check_log_files_exist')
+    @patch('src.services.logger_service.LoggerService.check_log_files_exist')
     def test_health_check_with_logging_issues(self, mock_log_check):
         """Test health check when logging has issues."""
         # Mock logging issues

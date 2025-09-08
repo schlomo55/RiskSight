@@ -284,12 +284,13 @@ class TestRiskProcessorAmplificationRules:
         }
         
         # Calculate expected base score without amplification
-        # Components: crime=30%, accident=40%, socio=33.33%, weather=10%
-        # Base = (0.30×0.30) + (0.40×0.25) + (0.333×0.25) + (0.10×0.20) = 0.253
-        # Final = 25.3
+        # Components: crime=0.3, accident=0.4, socio=0.333, weather=0.1
+        # Weights: crime=0.30, accident=0.25, socio=0.25, weather=0.20
+        # Base = (0.3×0.30) + (0.4×0.25) + (0.333×0.25) + (0.1×0.20) = 0.2933
+        # Final = 29.33
         
         result = self.processor.process_risk_data(input_data)
-        expected_base = 25.33
+        expected_base = 29.33
         
         # Result should be close to base calculation (no amplification)
         assert abs(result["risk_score"] - expected_base) < 1.0
@@ -306,12 +307,14 @@ class TestRiskProcessorAmplificationRules:
         result = self.processor.process_risk_data(input_data)
         
         # Base calculation
-        # Components: crime=80%, accident=30%, socio=55.56%, weather=90%
-        # Base = (0.80×0.30) + (0.30×0.25) + (0.556×0.25) + (0.90×0.20) = 0.694
-        
-        base_score = 69.4
-        expected_amplified = base_score * 1.15  # First rule multiplier
-        
+        # Components: crime=0.8, accident=0.3, socio=0.556, weather=0.9
+        # Weights: crime=0.30, accident=0.25, socio=0.25, weather=0.20
+        # Base = (0.8×0.30) + (0.3×0.25) + (0.556×0.25) + (0.9×0.20) = 0.6339
+        # Amplified = 0.6339 × 1.15 = 0.729 = 72.9
+
+        base_score = 63.39
+        expected_amplified = 72.9  # Amplified result
+
         assert result["risk_score"] > base_score
         assert abs(result["risk_score"] - expected_amplified) < 1.0
     
@@ -327,12 +330,14 @@ class TestRiskProcessorAmplificationRules:
         result = self.processor.process_risk_data(input_data)
         
         # Base calculation
-        # Components: crime=40%, accident=90%, socio=100%, weather=10%
-        # Base = (0.40×0.30) + (0.90×0.25) + (1.0×0.25) + (0.10×0.20) = 0.595
-        
-        base_score = 59.5
-        expected_amplified = base_score * 1.10  # Second rule multiplier
-        
+        # Components: crime=0.4, accident=0.9, socio=1.0, weather=0.1
+        # Weights: crime=0.30, accident=0.25, socio=0.25, weather=0.20
+        # Base = (0.4×0.30) + (0.9×0.25) + (1.0×0.25) + (0.1×0.20) = 0.615
+        # Amplified = 0.615 × 1.10 = 0.6765 = 67.65
+
+        base_score = 61.5
+        expected_amplified = 67.65  # Amplified result
+
         assert result["risk_score"] > base_score
         assert abs(result["risk_score"] - expected_amplified) < 1.0
     
@@ -358,12 +363,15 @@ class TestRiskProcessorAmplificationRules:
         result = processor.process_risk_data(input_data)
         
         # Should trigger custom rule with 1.5x multiplier
-        # Base ≈ (0.5×0.3) + (0.5×0.25) + (0.667×0.25) + (0.95×0.2) = 0.654
-        base_score = 65.4
-        expected_amplified = base_score * 1.5
-        
+        # Components: crime=0.5, accident=0.5, socio=0.667, weather=0.95
+        # Weights: crime=0.30, accident=0.25, socio=0.25, weather=0.20
+        # Base = (0.5×0.30) + (0.5×0.25) + (0.667×0.25) + (0.95×0.20) = 0.6317
+        # Amplified = 0.6317 × 1.5 = 0.9475 = 94.75
+        base_score = 63.17
+        expected_amplified = 94.75  # Amplified result
+
         assert result["risk_score"] > base_score
-        assert abs(result["risk_score"] - expected_amplified) < 2.0
+        assert abs(result["risk_score"] - expected_amplified) < 1.0
 
 
 class TestRiskProcessorValidation:
