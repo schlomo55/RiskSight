@@ -12,6 +12,7 @@ from datetime import datetime
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.responses import StreamingResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
 from pydantic import ValidationError as PydanticValidationError
 import pandas as pd
 
@@ -424,6 +425,16 @@ async def root():
     }
 
 
+@app.options("/")
+async def root_options():
+    """Handle OPTIONS request for root endpoint."""
+    response = JSONResponse(content={"message": "OK"})
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "*"
+    return response
+
+
 # Custom exception handlers for better error responses
 @app.exception_handler(ValidationError)
 async def validation_exception_handler(request, exc: ValidationError):
@@ -435,13 +446,69 @@ async def validation_exception_handler(request, exc: ValidationError):
     )
 
 
+@app.exception_handler(RequestValidationError)
+async def request_validation_exception_handler(request, exc: RequestValidationError):
+    """Handle FastAPI request validation errors with proper status codes."""
+    error_details = []
+    for error in exc.errors():
+        field = ".".join(str(x) for x in error["loc"])
+        
+        # Check if it's a business logic validation (weather, range constraints)
+        if error["type"] in ["value_error", "assertion_error"]:
+            # Custom validators like weather category
+            error_details.append(error.get("msg", "Validation error"))
+        elif error["type"] in ["less_than_equal", "greater_than_equal"]:
+            # Range constraints - format as business logic errors
+            field_name = error["loc"][-1] if error["loc"] else "field"
+            if "crime_index" in str(field_name):
+                error_details.append("crime_index must be between 0 and 10")
+            elif "accident_rate" in str(field_name):
+                error_details.append("accident_rate must be between 0 and 10")
+            elif "socioeconomic_level" in str(field_name):
+                error_details.append("socioeconomic_level must be between 1 and 10")
+            else:
+                error_details.append(f"{field}: {error['msg']}")
+        else:
+            # Other validation errors - keep as 422
+            return JSONResponse(
+                status_code=422,
+                content={"detail": exc.errors()}
+            )
+    
+    error_message = "; ".join(error_details)
+    logger.log_error(f"Request validation error (converted to 400): {error_message}")
+    
+    return JSONResponse(
+        status_code=400,
+        content={"detail": error_message}
+    )
+
+
 @app.exception_handler(PydanticValidationError)
 async def pydantic_validation_exception_handler(request, exc: PydanticValidationError):
     """Handle Pydantic validation errors."""
     error_details = []
     for error in exc.errors():
         field = ".".join(str(x) for x in error["loc"])
-        error_details.append(f"{field}: {error['msg']}")
+        
+        # Check if it's a business logic validation (weather, range constraints)
+        if error["type"] in ["value_error", "assertion_error"]:
+            # Custom validators like weather category
+            error_details.append(error.get("msg", "Validation error"))
+        elif error["type"] in ["less_than_equal", "greater_than_equal"]:
+            # Range constraints - format as business logic errors
+            field_name = error["loc"][-1] if error["loc"] else "field"
+            if "crime_index" in str(field_name):
+                error_details.append("crime_index must be between 0 and 10")
+            elif "accident_rate" in str(field_name):
+                error_details.append("accident_rate must be between 0 and 10")
+            elif "socioeconomic_level" in str(field_name):
+                error_details.append("socioeconomic_level must be between 1 and 10")
+            else:
+                error_details.append(f"{field}: {error['msg']}")
+        else:
+            # Other validation errors
+            error_details.append(f"{field}: {error['msg']}")
     
     error_message = "; ".join(error_details)
     logger.log_error(f"Pydantic validation error: {error_message}")
