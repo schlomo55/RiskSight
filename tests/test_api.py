@@ -6,16 +6,12 @@ health checks, and complete API behavior validation.
 """
 
 import pytest
-import json
 import io
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 from fastapi.testclient import TestClient
-from fastapi import HTTPException
 
-# Import the FastAPI app
 from main import app
 from src.api.routes import risk_processor, csv_processor
-from src.core.validators import ValidationError
 from src.services.csv_processor import CSVProcessingError
 from src.config.constants import WEATHER_CATEGORIES
 

@@ -7,14 +7,11 @@ with mixed data, processing statistics, and CSV structure validation.
 
 import pytest
 import pandas as pd
-import io
 import time
 from unittest.mock import Mock, patch
-from concurrent.futures import ThreadPoolExecutor
 
 from src.services.csv_processor import CSVProcessor, CSVProcessingError
 from src.core.risk_processor import RiskProcessor
-from src.core.validators import ValidationError
 from src.services.logger_service import LoggerService
 
 
