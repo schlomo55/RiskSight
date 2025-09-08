@@ -36,7 +36,7 @@ The system applies configurable weights, amplification rules, and statistical pr
 
 1. **Clone and Setup Environment**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/your-organization/RiskSight.git
    cd RiskSight
    
    # Create virtual environment (recommended)
@@ -401,11 +401,160 @@ The system provides comprehensive error handling:
 
 ## Contributing
 
-1. Follow the existing code structure and naming conventions
-2. Update `config/constants.py` for configuration changes
-3. Add comprehensive tests for new functionality  
-4. Update documentation for API changes
-5. Ensure all tests pass before submitting changes
+We welcome contributions to the RiskSight project! Please follow these guidelines to ensure smooth collaboration.
+
+### Development Workflow
+
+1. **Fork and Clone**
+   ```bash
+   # Fork the repository on GitHub, then:
+   git clone https://github.com/your-username/RiskSight.git
+   cd RiskSight
+   git remote add upstream https://github.com/your-organization/RiskSight.git
+   ```
+
+2. **Set Up Development Environment**
+   ```bash
+   # Create virtual environment
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   
+   # Install dependencies including dev tools
+   pip install -r requirements.txt
+   pip install pytest black flake8  # Development tools
+   ```
+
+3. **Create Feature Branch**
+   ```bash
+   # Always branch from main
+   git checkout main
+   git pull upstream main
+   git checkout -b feature/your-feature-name
+   ```
+
+### Git Workflow Guidelines
+
+#### Branch Naming Convention
+- `feature/description` - New features
+- `bugfix/description` - Bug fixes
+- `hotfix/description` - Critical fixes
+- `docs/description` - Documentation updates
+- `refactor/description` - Code refactoring
+
+#### Commit Message Convention
+Follow conventional commit format for clear history:
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+**Types:**
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code formatting (no logic changes)
+- `refactor`: Code restructuring (no feature changes)
+- `test`: Adding or modifying tests
+- `chore`: Maintenance tasks
+
+**Examples:**
+```bash
+git commit -m "feat(risk-processor): add weather amplification rules"
+git commit -m "fix(csv-processor): handle empty rows correctly"
+git commit -m "docs(readme): update API examples"
+```
+
+#### Development Process
+
+1. **Before Coding**
+   ```bash
+   # Ensure you're on latest main
+   git checkout main
+   git pull upstream main
+   git checkout your-feature-branch
+   git rebase main  # Resolve any conflicts
+   ```
+
+2. **During Development**
+   ```bash
+   # Make small, logical commits
+   git add .
+   git commit -m "feat(scope): descriptive message"
+   
+   # Run tests frequently
+   python -m pytest tests/ -v
+   ```
+
+3. **Before Submitting**
+   ```bash
+   # Format code
+   black src/ tests/
+   
+   # Run linting
+   flake8 src/ tests/
+   
+   # Run full test suite
+   python -m pytest tests/ -v
+   
+   # Update documentation if needed
+   ```
+
+4. **Submit Pull Request**
+   ```bash
+   # Push feature branch
+   git push origin feature/your-feature-name
+   
+   # Create PR on GitHub with:
+   # - Clear title and description
+   # - Reference related issues
+   # - Include testing details
+   ```
+
+### Code Quality Standards
+
+1. **Follow existing code structure and naming conventions**
+2. **Update `config/constants.py` for configuration changes**
+3. **Add comprehensive tests for new functionality**
+4. **Update documentation for API changes**
+5. **Ensure all tests pass before submitting changes**
+6. **Follow Python PEP 8 style guide**
+7. **Add docstrings for all public methods and classes**
+8. **Handle errors gracefully with proper logging**
+
+### Testing Requirements
+
+- Write unit tests for all new features
+- Maintain test coverage above 80%
+- Test both success and error scenarios
+- Include integration tests for API endpoints
+- Test CSV processing with various data formats
+
+### Documentation Requirements
+
+- Update README.md for user-facing changes
+- Update API documentation in docstrings
+- Add code comments for complex logic
+- Update configuration documentation
+- Include usage examples for new features
+
+### Review Process
+
+1. All changes require pull request review
+2. Automated tests must pass
+3. Code must be properly formatted
+4. Documentation must be updated
+5. At least one maintainer approval required
+
+### Getting Help
+
+- Check existing issues and discussions
+- Review the architecture documentation
+- Test your changes with the examples provided
+- Ask questions in pull request discussions
 
 ## License
 
