@@ -65,15 +65,21 @@ Base Score = 21 + 15 + 20 + 18 = 74%
 ```
 
 ### Step 4: Smart Amplification Rules
-Sometimes, combinations of factors make situations riskier than you'd expect. Our system includes "amplification rules" that boost the risk score when dangerous combinations occur.
+Sometimes, combinations of factors make situations riskier than you'd expect. Our system includes "amplification rules" that can either boost or reduce the risk score when specific combinations occur.
 
 **Current amplification rules**:
-1. **High Crime + Bad Weather**: If crime is above 7 AND weather is Stormy or Snowy → multiply by 1.15
-2. **High Accidents + Low Economy**: If accidents are above 8 AND socioeconomic level is below 3 → multiply by 1.10
+1. **High Crime + Severe Weather**: If crime is above 7 AND weather is Stormy, Snowy, or Extreme → multiply by 1.15 (risk increase)
+2. **Low Crime + Clear Weather**: If crime is below 4 AND weather is Clear → multiply by 0.9 (risk reduction)
 
 **Example**: If our base score of 74% triggers the first rule:
 ```
 Final Score = 74% × 1.15 = 85.1%
+```
+
+**Risk Reduction Example**: If a location has low crime (2) and clear weather:
+```
+Base Score might be 35%
+Final Score = 35% × 0.9 = 31.5% (reduced risk)
 ```
 
 ### Step 5: Final Output
@@ -110,8 +116,8 @@ Let's say you're evaluating the risk for **Downtown Portland on a stormy day**:
 
 4. **Amplification Check**:
    - Crime (8) > 7? ✅ Yes
-   - Weather is Stormy? ✅ Yes
-   - **Rule triggered**: Multiply by 1.15
+   - Weather is Stormy? ✅ Yes (Stormy is in the severe weather set: Stormy, Snowy, Extreme)
+   - **Rule triggered**: "High crime + severe weather" → Multiply by 1.15
    ```
    Amplified = 73.75% × 1.15 = 84.8%
    ```
